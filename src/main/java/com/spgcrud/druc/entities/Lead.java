@@ -1,36 +1,48 @@
 package com.spgcrud.druc.entities;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="leads")
 @Entity
 public class Lead {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	private String email;
 	private String password;
 	private String confirmPassword;
 	private Date dateOfBirth;
 	private String country;
 	
-	public Long getId() {
+	@OneToMany(mappedBy = "lead",cascade = CascadeType.ALL,orphanRemoval = true)
+	Set<Comment> comments;
+	
+	
+	Lead(long id,String email,String password,String confirmPassword,String country){
+		
+	}
+	public long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public Lead(String email, String password, String confirmPassword, Date dateOfBirth, String country) {

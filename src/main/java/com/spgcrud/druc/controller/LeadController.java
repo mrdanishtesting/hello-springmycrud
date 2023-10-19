@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.spgcrud.druc.dto.LeadDto;
 import com.spgcrud.druc.entities.Lead;
 import com.spgcrud.druc.services.LeadService;
 
@@ -24,12 +25,12 @@ public class LeadController {
 		return "login";
 	}
 	//http://localhost:9090/listleads
-	@GetMapping("/listleads")
-	public String listLeads(Model model) {
-		model.addAttribute("listleads", leadService.listAllLeads());
-		return "leads";
-		
-	}
+//	@GetMapping("/listleads")
+//	public String listLeads(Model model) {
+//		model.addAttribute("listleads", leadService.listAllLeads());
+//		return "leads";
+//		
+//	}
 	
 	@GetMapping("/new")
 	public String createLeadForm(Model model) {
@@ -44,6 +45,20 @@ public class LeadController {
 		return "redirect:/listleads";
 	}
 	
+	
+	public String saveLead(LeadDto leadData) {
+		Lead lead=new Lead();
+		lead.setEmail(leadData.getEmail());
+		lead.setPassword(leadData.getPassword());
+		lead.setConfirmPassword(leadData.getConfirmPassword());
+		lead.setDateOfBirth(leadData.getDateOfBirth());
+		
+		
+		leadService.saveOneLead(lead);
+		
+		
+		return null;
+	}
 	@GetMapping("/leads/edit/{id}")
 	public String editLeadForm(@PathVariable Long id ,Model model) {
 model.addAttribute("lead", leadService.getLeadById(id));
@@ -52,7 +67,7 @@ model.addAttribute("lead", leadService.getLeadById(id));
 	
 	@PostMapping("/leads/{id}")
 	public String updateLead(@PathVariable Long id, @ModelAttribute("l") Lead lead ,Model model) {
-		Lead leadByID = leadService.getLeadById(id);
+		 Lead leadByID = leadService.getLeadById(id);
 		
 		leadByID.setEmail("email");
 		leadByID.setPassword(lead.getPassword());

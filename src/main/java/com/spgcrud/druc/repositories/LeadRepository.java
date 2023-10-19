@@ -6,4 +6,7 @@ import com.spgcrud.druc.entities.Lead;
 
 public interface LeadRepository extends JpaRepository<Lead, Long> {
 
+	
+
+
 }

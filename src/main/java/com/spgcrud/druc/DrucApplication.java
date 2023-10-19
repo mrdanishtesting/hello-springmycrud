@@ -12,6 +12,9 @@ public class DrucApplication{
 		System.out.println("hi world");
 	}
 
-
+//@Bean
+//	public ModelMapper modelMapper() {
+//		return new ModelMapper();
+//	}
 
 }
